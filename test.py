@@ -66,7 +66,7 @@ def write_story_to_file(run_name, story_title, story_parts, art_style):
   if not os.path.exists(run_name):
     os.makedirs(run_name)
   
-  story_dict = { "title": story_title, "pages": story_parts, "art_style": art_style, "run_name": run_name }
+  story_dict = { "title": story_title, "pages": story_parts, "art_style": art_style, "run_name": run }
   jsonString = json.dumps(story_dict)
   jsonFile = open(f"{run_name}/story.json", "w")
   jsonFile.write(jsonString)
