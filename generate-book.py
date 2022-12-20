@@ -15,7 +15,7 @@ def create_story_text(pages, story_prompt):
   return text
 
 def create_story_title(story_full_text):
-  story_title_command = f"create a creative, clever, and short title for the following story: ${story_full_text}"
+  story_title_command = f"create an exciting, creative, clever, and short title for the following story: ${story_full_text}"
   response = openai.Completion.create(model="text-davinci-003", prompt=story_title_command, temperature=0.9, max_tokens=40)
   text = response["choices"][0]["text"]
   print(text)
@@ -28,23 +28,23 @@ def get_story_parts_from(story):
   
   return story_parts
 
-def create_page_summary(page_text):
-  summary_command = f"describe an image of: ${page_text}"
+def create_page_summary(page_text, character_summary):
+  summary_command = f"describe an image of: {page_text} where {character_summary}"
   response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.00, max_tokens=80)
   text = response["choices"][0]["text"]
   print(text)
   return text
 
 def create_character_summary(story_prompt):
-  summary_command = f"in short full sentances, what are the names of the characters in: ${story_prompt}?"
-  response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.0, max_tokens=30)
+  summary_command = f"describe visually what each character looks like in the following story prompt in short sentances: ${story_prompt}?"
+  response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.2, max_tokens=120)
   text = response["choices"][0]["text"]
   print(text)
   return text
 
 def generate_images_from(run_name, story_parts, character_summary, art_style):
   for i, page_text in enumerate(story_parts):
-    summary = create_page_summary(page_text)
+    summary = create_page_summary(page_text, character_summary)
     response = openai.Image.create(
       prompt=f'{art_style} style: {summary} where {character_summary}',
       n=1,
@@ -54,7 +54,7 @@ def generate_images_from(run_name, story_parts, character_summary, art_style):
     urllib.request.urlretrieve(image_url, f'{run_name}/{i}.jpg')
 
 def generate_cover_image(run_name, story_title, character_summary, art_style):
-  summary = create_page_summary(story_title)
+  summary = create_page_summary(story_title, character_summary)
   response = openai.Image.create(
     prompt=f'{art_style} style: {summary} where {character_summary}',
     n=1,
@@ -91,6 +91,8 @@ def create_story(run_name, story_prompt, pages, art_style):
   write_story_to_file(run_name, story_title, story_parts, art_style)
   generate_cover_image(run_name, story_title, character_summary, art_style)
   generate_images_from(run_name, story_parts, character_summary, art_style)
+  shutil.rmtree('./story-book/src/story')
+  os.makedirs('./story-book/src/story')
   shutil.copytree(f'./{run_name}', './story-book/src/story', dirs_exist_ok=True)
 
 run_name = 'fox-story'
@@ -104,9 +106,13 @@ pages = '8',
 art_style = 'Dr. Seuss'
 pages = '6'
 
-run_name = 'two-cats'
-story_prompt = "two cats named Coco and Melon who live and are trapped in a girl named Emmas apartment. the two girl cats break out of the apartment and travel all around the city. but then decide they miss emma and come home"
-art_style = 'soft water color'
+run_name = 'two-cats-pt2'
+story_prompt = "two cats named Coco and Melon who live and are trapped in a girl named Emma's apartment. The two cats, also know as, The girls, break out of the apartment and travel all around the city. But after several crazy adventures they then decide to come home because they miss Emma. Emma is Blonde and beautiful. Coco is white, fluffy with green eyes, and is playful. Melon is siamese, has silver boots, and is lazy and cautious."
+art_style = 'soft water color smooth air brushed'
+
+run_name = 'simpsons'
+story_prompt = "murder mystery episode of the simpsons. Everyone in the town thinks it was bart, but then because something you decide happens everyone thinks it was Mr. Burns. Homer is really mad a bart. Everyone eventually finds out it was Side show Bob"
+art_style = 'blair witch project'
 
 create_story(run_name, story_prompt, pages, art_style)
 

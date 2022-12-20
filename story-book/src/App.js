@@ -23,7 +23,7 @@ function App() {
       <img className='story-image' src={pageIndex === -1 ? cover : images[`${pageIndex}.jpg`]}></img>
       <div style={{ marginTop: '8px' }}>
         { pageIndex !== -1 && (<button onClick={() => { setPageIndex(pageIndex - 1) }}>⬅️</button>) }
-        { !isEnd && (<button onClick={() => { setPageIndex(pageIndex + 1) }}>➡️</button>) }
+        <button onClick={() => { isEnd ? setPageIndex(-1) : setPageIndex(pageIndex + 1) }}>➡️</button>
       </div>
       <p className='story-text'>{storyJson.pages[pageIndex]}</p>
     </div>
