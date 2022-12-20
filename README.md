@@ -1,13 +1,16 @@
 ﻿# story-book
 
 to run:
+
+First, you will need to setup a Open-AI API Env var, as `OPENAI_API_KEY` more info [here](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
 ```
+pip install openai
 py generate-book.py
 cd story-book
 yarn start
 ```
 
-Just change the create_story params and re-run `generate-book.py`. You can leave the webserver running.
+Just change the create_story params in `generate-book.py` and re-run to create a new story, eg. `py generate-book.py`. You can leave the webserver running. It will move copy the new run assets into the webserver directory for you, eg move `./run-name` to `./story-book/src/story`.
 
 
 input:
