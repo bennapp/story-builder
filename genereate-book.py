@@ -1,6 +1,7 @@
 import os
 import urllib.request
 import json
+import shutil
 import openai
 
 # Load your API key from an environment variable or secret management service
@@ -29,7 +30,7 @@ def get_story_parts_from(story):
 
 def create_page_summary(page_text):
   summary_command = f"describe an image of: ${page_text}"
-  response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.05, max_tokens=80)
+  response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.00, max_tokens=80)
   text = response["choices"][0]["text"]
   print(text)
   return text
@@ -62,11 +63,16 @@ def generate_cover_image(run_name, story_title, character_summary, art_style):
   image_url = response['data'][0]['url']
   urllib.request.urlretrieve(image_url, f"{run_name}/cover.jpg")
 
+def copy_and_overwrite(from_path, to_path):
+    if os.path.exists(to_path):
+        shutil.rmtree(to_path)
+    shutil.copytree(from_path, to_path)
+
 def write_story_to_file(run_name, story_title, story_parts, art_style):
   if not os.path.exists(run_name):
     os.makedirs(run_name)
   
-  story_dict = { "title": story_title, "pages": story_parts, "art_style": art_style, "run_name": run }
+  story_dict = { "title": story_title, "pages": story_parts, "art_style": art_style, "run_name": run_name }
   jsonString = json.dumps(story_dict)
   jsonFile = open(f"{run_name}/story.json", "w")
   jsonFile.write(jsonString)
@@ -84,6 +90,7 @@ def create_story(run_name, story_prompt, pages, art_style):
   write_story_to_file(run_name, story_title, story_parts, art_style)
   generate_cover_image(run_name, story_title, character_summary, art_style)
   generate_images_from(run_name, story_parts, character_summary, art_style)
+  shutil.copytree(f'./{run_name}', './story-book/src/story', dirs_exist_ok=True)
 
 run_name = 'fox-story'
 pages = '6'
@@ -94,7 +101,11 @@ run_name = 'grinch'
 story_prompt = 'the Grinch, who is a green fuzzy monster is back to steal Christmas again but this time with his red fuzzy monster sister, the Granch. They learn that its not worth it to steal Christmas becase what is important is family. They learn this from a little girl named Suzy.'
 pages = '8',
 art_style = 'Dr. Seuss'
+pages = '6'
 
+run_name = 'two-cats'
+story_prompt = "two cats named Coco and Melon who live and are trapped in a girl named Emmas apartment. the two girl cats break out of the apartment and travel all around the city. but then decide they miss emma and come home"
+art_style = 'soft water color'
 
 create_story(run_name, story_prompt, pages, art_style)
 
@@ -106,3 +117,4 @@ create_story(run_name, story_prompt, pages, art_style)
 # "In the image, Speedy is standing in front of Ben with his hands on his hips. He has a determined look on his face and is wearing a bright red tracksuit. Ben is standing a few feet away, looking up at Speedy with a look of admiration and concentration. He is wearing a blue t-shirt and shorts, and his feet are planted firmly on the ground."
 # create_character_summary(story_prompt)
 # write_story_to_file('test', 'just a test', ['1', '2'], 'dope')
+# copy_and_overwrite('./grinch', './story-book/story')
