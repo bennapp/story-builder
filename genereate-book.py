@@ -78,6 +78,7 @@ def write_story_to_file(run_name, story_title, story_parts, art_style):
   jsonFile.write(jsonString)
   jsonFile.close()
 
+## run_name let's you keep the files generated for previous runs, it just places them in a folder named by the `run_name` param
 def create_story(run_name, story_prompt, pages, art_style):
   if not os.path.exists(run_name):
     os.makedirs(run_name)

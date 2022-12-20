@@ -1,5 +1,15 @@
 ﻿# story-book
 
+to run:
+```
+py generate-book.py
+cd story-book
+yarn start
+```
+
+Just change the create_story params and re-run `generate-book.py`. You can leave the webserver running.
+
+
 input:
 ```
 run_name = 'fox-story'
