@@ -63,11 +63,6 @@ def generate_cover_image(run_name, story_title, character_summary, art_style):
   image_url = response['data'][0]['url']
   urllib.request.urlretrieve(image_url, f"{run_name}/cover.jpg")
 
-def copy_and_overwrite(from_path, to_path):
-    if os.path.exists(to_path):
-        shutil.rmtree(to_path)
-    shutil.copytree(from_path, to_path)
-
 def write_story_to_file(run_name, story_title, story_parts, art_style):
   if not os.path.exists(run_name):
     os.makedirs(run_name)
