@@ -3,8 +3,10 @@
 to run:
 
 First, you will need to setup a Open-AI API Env var, as `OPENAI_API_KEY` more info [here](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
+and stability api key as `STABILITY_KEY` more info [here](https://platform.stability.ai/docs/getting-started/authentication)
 ```
 pip install openai
+pip install stability-sdk
 py generate-book.py
 cd story-book
 yarn start
@@ -19,6 +21,7 @@ run_name = 'fox-story'
 pages = '6'
 story_prompt = "a quick brown fox named Speedy that hops over a lazy boy named Ben. They become friends and the fox teaches the boy to be quick."
 art_style = 'vintage illustration'
+api = 'openai' # or it can be 'stability' (this is for the images only)
 create_story(run_name, story_prompt, pages, art_style)
 ```
 
