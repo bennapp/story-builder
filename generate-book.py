@@ -87,14 +87,14 @@ def character_dict_from(text):
     description_string = description_string_with_newline.replace('\n', '')
     if len(description_string):
       character_and_description = description_string.split(': ')
-      name = character_and_description[0]
+      name = character_and_description[0].replace("'", '')
       description = character_and_description[1]
       character_summary[name] = description
 
   return character_summary
 
 def create_character_summary(story_prompt):
-  summary_command = f"describe each character visually, what kind of creature they are, and do not include their names in the description. Return the answer in the following format, name: <description> for this prompt: ${story_prompt}?"
+  summary_command = f"be creative describe each character visually in one sentance each, what kind of creature they are, and do not include their names in the description. Return the answer in the following format, name: <description> for this prompt: ${story_prompt}?"
   response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.2, max_tokens=120)
   text = response["choices"][0]["text"]
   print(text)
@@ -184,11 +184,6 @@ story_prompt = "Dobby and his loyal sidekick Scabbers win a trip to Mar-a-Lago t
 pages = '7'
 art_style = "pixar"
 
-run_name = 'bluetiful'
-story_prompt = "a story about a crayon named Bluetiful who is not the sharpest crayon in the box. he grows up struggling to be like the other crayon kids. they make fun of him, and call him names. he is bullied by a crayon named Sea Green and a crayon named Tumbleweed. finally he learns he becomes the brightest crayon and learns to overcome the bullies"
-pages = '5'
-art_style = "crayon"
-
 api = 'stability'
 
 run_name = 'hpc-splay-3'
@@ -204,6 +199,19 @@ run_name = 'hpc-splay-original-stability'
 story_prompt = "Dobby, who is a greedy house elf, and his loyal sidekick Scabbers, who is a dirty rat, win a trip to Mar-a-Lago to meet former 45th President after buying Presidential Collection Digital Trading Cards and learn what really happened in the election through a School House Rock-style sing-along"
 pages = '7'
 art_style = "canon 35 mm at f / 5.6 lens color"
+
+run_name = 'bluetiful-2'
+story_prompt = "a story about crayons that have faces and look like pixar characters. and crayon named Bluetiful who is not the sharpest crayon in the box. he grows up struggling to be like the other crayon kids. they make fun of him, and call him names. he is bullied by a crayon named Sea Green and a crayon named Tumbleweed. finally he learns he becomes the brightest crayon and learns to overcome the bullies"
+pages = '5'
+art_style = "drawn with crayons"
+
+run_name = 'fox-story-3'
+pages = '6'
+story_prompt = "a quick brown fox named Speedy that hops over a lazy boy named Ben. They become friends and the fox teaches the boy to be quick."
+art_style = 'vintage illustration'
+api = 'openai'
+
+additional_character_info = ""
 
 create_story(run_name, story_prompt, pages, art_style, api)
 
