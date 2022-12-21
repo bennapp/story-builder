@@ -1,0 +1,66 @@
+{
+  "fox-story": {
+    "pages": "6",
+    "story_prompt": "a quick brown fox named Speedy that hops over a lazy boy named Ben. They become friends and the fox teaches the boy to be quick.",
+    "art_style": "vintage illustration"
+  },
+  "grinch": {
+    "story_prompt": "the Grinch, who is a green fuzzy monster is back to steal Christmas again but this time with his red fuzzy monster sister, the Granch. They learn that its not worth it to steal Christmas becase what is important is family. They learn this from a little girl named Suzy.",
+    "pages": "8",
+    "art_style": "Dr. Seuss"
+  },
+  "two-cats-pt2": {
+    "story_prompt": "two cats named Coco and Melon who live and are trapped in a girl named Emma's apartment. The two cats, also know as, The girls, break out of the apartment and travel all around the city. But after several crazy adventures they then decide to come home because they miss Emma. Emma is Blonde and beautiful. Coco is white, fluffy with green eyes, and is playful. Melon is siamese, has silver boots, and is lazy and cautious.",
+    "art_style": "soft water color smooth air brushed"
+  },
+  "simpsons": {
+    "story_prompt": "murder mystery episode of the simpsons. Everyone in the town thinks it was bart, but then because something you decide happens everyone thinks it was Mr. Burns. Homer is really mad a bart. Everyone eventually finds out it was Side show Bob",
+    "art_style": "blair witch project"
+  },
+  "dota bros": {
+    "story_prompt": "There are four childhood friends, Hoagiez, Benjammin', Beezkneez, and QuailmanX, who play a computer game called Dota 2. Later in life, they still play Dota 2 together. now they are old boomers and their reaction times are slow; one day they have an epic 120 min game that they lose",
+    "art_style": "dota 2 fantasy anime",
+    "pages": "8"
+  },
+  "hpc-splay": {
+    "story_prompt": "Dobby, who is a greedy house elf, and his loyal sidekick Scabbers, who is a dirty rat, win a trip to Mar-a-Lago to meet former 45th President after buying Presidential Collection Digital Trading Cards and learn what really happened in the election through a School House Rock-style sing-along",
+    "pages": "7",
+    "art_style": "canon 35 mm at f / 5.6 lens color"
+  },
+  "blbsr": {
+    "story_prompt": "Lady Whistledown like story of Republican Senator man named Teddy, and Democrat speaker of the House Women named Nancy, secret romance in Bridgerton after they flee from Washington DC together in a romantic get away with lots of danger and other scary things",
+    "pages": "5",
+    "art_style": "horror"
+  },
+  "hpc-splay-2": {
+    "story_prompt": "Dobby and his loyal sidekick Scabbers win a trip to Mar-a-Lago to meet former 45th President after buying 45th Presedential themed NFTs and learn what really happened in the 2020 election through a School House Rock-style sing-along",
+    "pages": "7",
+    "art_style": "pixar"
+  },
+  "hpc-splay-3": {
+    "story_prompt": "Dobby and his loyal sidekick Scabbers win a trip to Mar-a-Lago to meet former 45th President after buying 45th Presedential themed NFTs and learn what really happened in the 2020 election through a School House Rock-style sing-along",
+    "pages": "6",
+    "art_style": "pixar"
+  },
+  "two-cats-pt3": {
+    "story_prompt": "two cats named Coco and Melon who live and are trapped in a girl named Emma's apartment. The two cats, also know as, The girls, break out of the apartment and travel all around the city. But after several crazy adventures they then decide to come home because they miss Emma. Emma is Blonde and beautiful. Coco is white, fluffy with green eyes, and is playful. Melon is siamese, has silver boots, and is lazy and cautious.",
+    "pages": "6",
+    "art_style": "gothic horror"
+  },
+  "hpc-splay-original-stability": {
+    "story_prompt": "Dobby, who is a greedy house elf, and his loyal sidekick Scabbers, who is a dirty rat, win a trip to Mar-a-Lago to meet former 45th President after buying Presidential Collection Digital Trading Cards and learn what really happened in the election through a School House Rock-style sing-along",
+    "pages": "7",
+    "art_style": "canon 35 mm at f / 5.6 lens color"
+  },
+  "bluetiful-2": {
+    "story_prompt": "a story about crayons that have faces and look like pixar characters. and crayon named Bluetiful who is not the sharpest crayon in the box. he grows up struggling to be like the other crayon kids. they make fun of him, and call him names. he is bullied by a crayon named Sea Green and a crayon named Tumbleweed. finally he learns he becomes the brightest crayon and learns to overcome the bullies",
+    "pages": "5",
+    "art_style": "drawn with crayons"
+  },
+  "fox-story-3": {
+    "pages": "6",
+    "story_prompt": "a quick brown fox named Speedy that hops over a lazy boy named Ben. They become friends and the fox teaches the boy to be quick.",
+    "art_style": "vintage illustration",
+    "api": "openai"
+  }
+}
