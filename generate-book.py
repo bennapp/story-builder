@@ -107,32 +107,32 @@ def generate_images_from(run_name, story_parts, character_summary, art_style, ap
   for i, page_text in enumerate(story_parts):
     summary = create_page_summary(page_text, character_summary)
     prompt = f'as {art_style} style, {summary}'
-    file_name = f'{run_name}/{i}.png'
+    file_name = f'./story-book-runs/{run_name}/{i}.png'
     create_image(prompt, file_name, api)
 
 def generate_cover_image(run_name, story_title, character_summary, art_style, api):
   summary = create_page_summary(story_title, character_summary)
   prompt = f'as {art_style} style, {summary}'
-  file_name = f"{run_name}/cover.png"
+  file_name = f"./story-book-runs/{run_name}/cover.png"
   create_image(prompt, file_name, api)
 
 def write_story_to_file(run_name, story_title, story_parts, art_style):
-  if not os.path.exists(run_name):
-    os.makedirs(run_name)
+  if not os.path.exists('./story-book-runs/' + run_name):
+    os.makedirs('./story-book-runs/' + run_name)
   
   story_dict = { "title": story_title, "pages": story_parts, "art_style": art_style, "run_name": run_name }
   jsonString = json.dumps(story_dict)
-  jsonFile = open(f"{run_name}/story.json", "w")
+  jsonFile = open(f"./story-book-runs/{run_name}/story.json", "w")
   jsonFile.write(jsonString)
   jsonFile.close()
 
 def view_run(run_name):
   shutil.rmtree('./story-book/src/story')
   os.makedirs('./story-book/src/story')
-  shutil.copytree(f'./{run_name}', './story-book/src/story', dirs_exist_ok=True)
+  shutil.copytree(f'./story-book-runs/{run_name}', './story-book/src/story', dirs_exist_ok=True)
 
 def create_previous_run(run_name, new_run_name, overrides={}):
-  with open('story_prompts.json', 'r') as f:
+  with open('./story-book-runs/' + 'story_prompts.json', 'r') as f:
     data = f.read()
   runs = json.loads(data)
 
@@ -145,8 +145,8 @@ def create_previous_run(run_name, new_run_name, overrides={}):
 
 ## run_name let's you keep the files generated for previous runs, it just places them in a folder named by the `run_name` param
 def create_story(run_name, story_prompt, pages, art_style, api='openai', character_summary_override = None):
-  if not os.path.exists(run_name):
-    os.makedirs(run_name)
+  if not os.path.exists('./story-book-runs/' + run_name):
+    os.makedirs('./story-book-runs/' + run_name)
 
   if character_summary_override is None:
     character_summary = create_character_summary(story_prompt)
