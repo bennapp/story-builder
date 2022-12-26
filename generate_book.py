@@ -106,32 +106,32 @@ def generate_images_from(run_name, story_parts, character_summary, art_style, ap
   for i, page_text in enumerate(story_parts):
     summary = create_page_summary(page_text, character_summary)
     prompt = f'as {art_style} style, {summary}'
-    file_name = f'{run_name}/{i}.png'
+    file_name = f'./story-book-runs/{run_name}/{i}.png'
     create_image(prompt, file_name, api)
 
 def generate_cover_image(run_name, story_title, character_summary, art_style, api):
   summary = create_page_summary(story_title, character_summary)
   prompt = f'as {art_style} style, {summary}'
-  file_name = f"{run_name}/cover.png"
+  file_name = f"./story-book-runs/{run_name}/cover.png"
   create_image(prompt, file_name, api)
 
 def write_story_to_file(run_name, story_title, story_parts, art_style):
-  if not os.path.exists(run_name):
-    os.makedirs(run_name)
+  if not os.path.exists('./story-book-runs/' + run_name):
+    os.makedirs('./story-book-runs/' + run_name)
   
   story_dict = { "title": story_title, "pages": story_parts, "art_style": art_style, "run_name": run_name }
   jsonString = json.dumps(story_dict)
-  jsonFile = open(f"{run_name}/story.json", "w")
+  jsonFile = open(f"./story-book-runs/{run_name}/story.json", "w")
   jsonFile.write(jsonString)
   jsonFile.close()
 
 def view_run(run_name):
   shutil.rmtree('./story-book/src/story')
   os.makedirs('./story-book/src/story')
-  shutil.copytree(f'./{run_name}', './story-book/src/story', dirs_exist_ok=True)
+  shutil.copytree(f'./story-book-runs/{run_name}', './story-book/src/story', dirs_exist_ok=True)
 
 def create_previous_run(run_name, new_run_name, overrides={}):
-  with open('story_prompts.json', 'r') as f:
+  with open('./story-book-runs/' + 'story_prompts.json', 'r') as f:
     data = f.read()
   runs = json.loads(data)
 
@@ -139,15 +139,19 @@ def create_previous_run(run_name, new_run_name, overrides={}):
   pages = overrides.get('pages') or runs[run_name].get('pages') or '5'
   art_style = overrides.get('art_style') or runs[run_name].get('art_style') or 'vintage illustration'
   api = overrides.get('api') or runs[run_name].get('api') or 'openai'
-  print(story_prompt, pages, art_style, api)
-  create_story(new_run_name, story_prompt, pages, art_style, api)
+  character_summary = overrides.get('character_summary') or None
+  create_story(new_run_name, story_prompt, pages, art_style, api, character_summary)
 
 ## run_name let's you keep the files generated for previous runs, it just places them in a folder named by the `run_name` param
-def create_story(run_name, story_prompt, pages, art_style, api='openai'):
-  if not os.path.exists(run_name):
-    os.makedirs(run_name)
+def create_story(run_name, story_prompt, pages, art_style, api='openai', character_summary_override = None):
+  if not os.path.exists('./story-book-runs/' + run_name):
+    os.makedirs('./story-book-runs/' + run_name)
 
-  character_summary = create_character_summary(story_prompt)
+  if character_summary_override is None:
+    character_summary = create_character_summary(story_prompt)
+  else:
+    character_summary = character_summary_override
+  
   story_full_text = create_story_text(pages, story_prompt)
   story_parts = get_story_parts_from(story_full_text)
 
@@ -157,8 +161,11 @@ def create_story(run_name, story_prompt, pages, art_style, api='openai'):
   generate_images_from(run_name, story_parts, character_summary, art_style, api)
   view_run(run_name)
 
-additional_character_info = ""
-
+fox_story_character_summary = {
+  'Ben': 'A lazy boy with a blue hat and a red shirt with blonde hair and blue eyes and green boots',
+  'Speedy': 'A orange fox with a silver streak and white boots who looks quick'
+}
+# create_previous_run('fox-story', 'fox-story-char-summary', { 'api': 'stability', 'character_summary': fox_story_character_summary })
 # create_previous_run('hpc-splay', 'hpc-splay-stability-nouveau', { 'api': 'stability', 'art_style': '1920s art nouveau' })
 
 run_name = 'gretchen'
@@ -183,7 +190,6 @@ pages = 15
 # create_story(run_name, story_prompt, pages, art_style, 'openai')
 
 # view_run('dennis')
-
 # Testing:
 # story_full_text = "\n\nOnce upon a time, there was a quick brown fox that lived in a nearby forest. Every day, the fox would go on a long journey to explore the world. One day, while on his travels, the fox stumbled upon a lazy boy who was lying in the grass. The fox was intrigued by the boy, and he decided to hop closer to take a better look.\n\nThe boy was surprised to see the fox, but he was also curious. He asked the fox why he was so quick and why he was hopping around. The fox smiled and told the boy that he was always on the move and that he enjoyed hopping to get around. The boy found this fascinating and asked the fox to teach him how to move quickly.\n\nThe fox was delighted to have a new friend, and he agreed to teach the boy. Every day, the fox would take the boy on a new adventure and teach him how to move quickly. The fox would demonstrate different techniques and show the boy how to move efficiently.\n\nThe boy was a quick learner and soon he was able to keep up with the fox. He was amazed at how much faster he could move and he was excited to explore the world with his new friend.\n\nThe fox and the boy became great friends and they would often go on adventures together. The boy was always eager to learn and he was grateful for the fox's guidance.\n\nThe fox and the boy continued to explore the world together for many years. The boy had learned how to be quick and he was no longer lazy. The fox was proud of his friend and he was happy to have someone to share his adventures with."
 # story_title = "The Fox and the Speedy Boy: A Tale of Quickening Friendship"
