@@ -1,4 +1,3 @@
-from cProfile import run
 import os
 import io
 import warnings
@@ -52,7 +51,7 @@ def create_image(prompt, file_name, api):
 
 def create_story_text(pages, story_prompt):
   story_prompt_command = f"Tell me a {pages} paragraph short story about: {story_prompt}"
-  response = openai.Completion.create(model="text-davinci-003", prompt=story_prompt_command, temperature=0.7, max_tokens=400)
+  response = openai.Completion.create(model="text-davinci-003", prompt=story_prompt_command, temperature=0.9, max_tokens=400)
   text = response["choices"][0]["text"]
   print(text)
   return text
@@ -61,7 +60,7 @@ def create_story_title(story_full_text):
   story_title_command = f"create an exciting, creative, clever, and short title for the following story that does not have quotes in it: ${story_full_text}"
   response = openai.Completion.create(model="text-davinci-003", prompt=story_title_command, temperature=0.9, max_tokens=40)
   text = response["choices"][0]["text"]
-  text = text.replace("\n\n", "")
+  text = text.replace("\n", "")
   print(text)
   return text
 
@@ -95,7 +94,7 @@ def character_dict_from(text):
   return character_summary
 
 def create_character_summary(story_prompt):
-  summary_command = f"be creative describe each character visually in one sentance each, what kind of creature they are, and do not include their names in the description. Return the answer in the following format, name: <description> for this prompt: ${story_prompt}?"
+  summary_command = f"describe each character visually in one sentance each, what kind of creature they are, and do not include their names in the description. Return the answer in the following format, name: <description> for this prompt: ${story_prompt}?"
   response = openai.Completion.create(model="text-davinci-003", prompt=summary_command, temperature=0.2, max_tokens=120)
   text = response["choices"][0]["text"]
   print(text)
@@ -160,7 +159,30 @@ def create_story(run_name, story_prompt, pages, art_style, api='openai'):
 
 additional_character_info = ""
 
-create_previous_run('hpc-splay', 'hpc-splay-stability-nouveau', { 'api': 'stability', 'art_style': '1920s art nouveau' })
+# create_previous_run('hpc-splay', 'hpc-splay-stability-nouveau', { 'api': 'stability', 'art_style': '1920s art nouveau' })
+
+run_name = 'gretchen'
+story_prompt = 'A black standard poodle named Millie and her owner Gretchen, who is a tall blonde, go for a walk and they find a big bone for Millie and a purse full of cash that says take me im free and they go to paris together on a jet from Centennial Airpot and they have a beautiful trip'
+art_style = 'soft water color'
+pages = 6
+
+run_name = 'dennis'
+story_prompt = 'There were two little boys, Ian and Ben and their parents Gretch and Dennis. They went on a trip to cut down a big Christmas tree and then they took pictures they took decorated the tree. And a poodle named Lucy drank the tree water and they all had a cozy evening around the fire'
+art_style = '19th century Gothic'
+pages = 6
+
+run_name = 'dennis'
+story_prompt = 'There is a piece of animated chocolate named Andy who mint colored and green. And he has a friend named Cash who is a cashew. The two go to a holiday party and this animated group of bacon people crash the party and everyone ends up loving them'
+art_style = 'claymation'
+pages = 6
+
+run_name = 'ian'
+story_prompt = 'This story takes place in the year 2500. A 13 year old boy named Benjamin is slightly chubby and wears glasses, he is pugnacious, intelligent, and a mischievious troublemaker. Benjamin goes on a school field trip to a history museum. While on a guided tour with his school group, he wanders away, and steps into a room where there is a time machince. In the year 2500, time travel is commonplace and used to study history. Benjamin, ever the troublemaker, starts playing with the machine and accidently opes up a swirling blue time portal, and is sucked into it. Benjamin is transported back to the year 1720, where he is stuck there. Using his rudimentary knowledge of science and his middle school education, he becomes the historical figure we know as Benjamin Franklin, becoming a wealthy publisher, inventor of electricity, and one of the found Fathers of America. This story should discuss how Benjamin Franklins improbable life and wide range of discoveries, such as electricity and the Gulfstream, as well as books predicting the weather make a lot more sense when you know he was a 13 year old kid from the future, trying to recreate it.'
+art_style = 'vintage illustration'
+pages = 15
+# create_story(run_name, story_prompt, pages, art_style, 'openai')
+
+# view_run('dennis')
 
 # Testing:
 # story_full_text = "\n\nOnce upon a time, there was a quick brown fox that lived in a nearby forest. Every day, the fox would go on a long journey to explore the world. One day, while on his travels, the fox stumbled upon a lazy boy who was lying in the grass. The fox was intrigued by the boy, and he decided to hop closer to take a better look.\n\nThe boy was surprised to see the fox, but he was also curious. He asked the fox why he was so quick and why he was hopping around. The fox smiled and told the boy that he was always on the move and that he enjoyed hopping to get around. The boy found this fascinating and asked the fox to teach him how to move quickly.\n\nThe fox was delighted to have a new friend, and he agreed to teach the boy. Every day, the fox would take the boy on a new adventure and teach him how to move quickly. The fox would demonstrate different techniques and show the boy how to move efficiently.\n\nThe boy was a quick learner and soon he was able to keep up with the fox. He was amazed at how much faster he could move and he was excited to explore the world with his new friend.\n\nThe fox and the boy became great friends and they would often go on adventures together. The boy was always eager to learn and he was grateful for the fox's guidance.\n\nThe fox and the boy continued to explore the world together for many years. The boy had learned how to be quick and he was no longer lazy. The fox was proud of his friend and he was happy to have someone to share his adventures with."
